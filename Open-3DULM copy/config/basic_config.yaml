@@ -1,0 +1,42 @@
+    # ---
+    # I/O parameters
+    "input_var_name": "IQ"                                                                          # Name of the varaible when IQ are loaded (needed when loading .mat or .npz files).
+    "max_workers": 1                                                                                # OPTIONAL PARAMETER (can be set with the command line). Number of process in parrallel to run 3D-ULM.
+    # "export_extension_tracks_localizations": ["npz", "csv", "hdf5"]                                 # Determines the format to save tracks (supported formats: "npz", "csv", "hdf5").
+    "export_extension_tracks_localizations": ["hdf5"]  
+    # "export_extension_volume": ["npz", "hdf5", "npy"]                                                 # Determines the format to save localisations (supported formats: "npz", "hdf5", "npy").
+    "export_extension_volume": ["hdf5"]   
+    "export_volume" : ["density", "velocity", "directivity", "saturation_curve", "power_doppler"]   # Volumes can be exported in different types:
+                                                                                                    #   - density: Visualizes density of tracks in the entire volume.
+                                                                                                    #   - velocity: Apply vector norm for velocity.
+                                                                                                    #   - directivity: Add direction to the velocity in the Z axis.
+                                                                                                    #   - power_doppler: Generate Power Doppler.
+                                                                                                    #   - saturation_curve:  Visualizes the microbubble concentration for each block.
+    # ---
+    # Acquisition parameters
+    "volumerate": 260                                                                               # Number of volumes acquiried per second. [Hz]
+    # ---
+    # Beamforming parameters
+    "z_dim": 0                                                                                      # Dimension in the IQ where Z is located [0,1,2].
+    "voxel_size": [0.09856, 0.150, 0.150]                                                           # Voxel size in each directions [mm].
+    "origin": [3.7453E+01, -4.800, -5.175]                                                          # Reconstruction grid origin in each directions [mm].
+    # ---
+    # ULM parameters
+    "interp_scale" : 10                                                                             # 3x2D interpolation scale before localization
+    "res": 10                                                                                       # The hypotetical super-resolution factor.
+    "max_velocity": 30                                                                              # The max speed of the particle to track [mm/s]. (To be converted to maximum linking distance).
+    "bandpass_filter": [10, 64]                                                                     # Cutoffs for the bandpass filter.
+    "svd_values": [12, 200]                                                                         # The singular values that will be kept after applying SVD filtering.
+    "number_of_particles": 900                                                                      # The number of microbubbles to be localized in every frame.
+    "min_length": 19                                                                                # The minimum number of frames a microbubble must be tracked for it to be accepted [frame].
+    "filter_order": 2                                                                               # The order of the bandpass filter.
+    "filt_mode": "SVD"                                                                              # Filt_mode (int): The filtering mode.
+                                                                                                    #      filt_mode can be:
+                                                                                                    #          - "no_filter": nofilter 
+                                                                                                    #          - "SVD": only SVD
+                                                                                                    #          - "SVD_bandpass": SVD+butter
+    "fwhm": [5,5,5]                                                                                 # Size of the PSF for localization in each directions. [pixel * 3]
+    "nb_local_max": 10                                                                              # The maximum number of allowed microbubbles inside a patch (fwhm^3) [1]
+    "min_snr": 9                                                                                    # The minimum SNR value for a microbubble to be accepted [dB].
+    "patch_size": [7,7,7]                                                                           # The size of the 3D kernel where the local SNR is computed [pixel * 3].
+    "max_gap_closing": 0                                                                            # The maximum number of frames that the microbubble is allowed to disappear and reappear (simpletracker parameter). [1]
