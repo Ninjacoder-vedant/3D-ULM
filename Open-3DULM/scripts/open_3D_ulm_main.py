@@ -87,6 +87,7 @@ def compute_bloc(ulm_pipeline,iq_files,input_var_name,export_parameters,index):
 
     # Load complex IQ data
     iq = load_iq(iq_files[index], input_var_name)
+    
 
     # Apply chosen filtering mode (SVD/Bandpass/etc)
     if ulm_pipeline.filt_mode != "no_filter":
