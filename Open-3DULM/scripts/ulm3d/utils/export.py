@@ -67,16 +67,16 @@ def export_locs(
     """
     if "npz" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "npz")
-        np.savez(tracks_output_path + f"\\locs_{index:04}", localizations=localizations)
+        np.savez(os.path.join(tracks_output_path,f"locs_{index:04}"), localizations=localizations)
 
     if "hdf5" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "hdf5")
-        with h5py.File(tracks_output_path + f"\\locs_{index:04}" + ".hdf5", "w") as f:
+        with h5py.File(os.path.join(tracks_output_path,f"locs_{index:04}.hdf5"), "w") as f:
             f.create_dataset("localizations", data=localizations)
 
     if "csv" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "csv")
-        export_csv(localizations, tracks_output_path + f"\\locs_{index:04}" + ".csv")
+        export_csv(localizations, os.path.join(tracks_output_path,f"locs_{index:04}.csv"))
 
 
 def export_tracks(
@@ -100,20 +100,20 @@ def export_tracks(
     if "npz" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "npz")
         np.savez(
-            tracks_output_path + f"\\tracks_{index:04}",
+            os.path.join(tracks_output_path, f"tracks_{index:04}"),
             interp_tracks=tracks[0],
             raw_tracks=tracks[1],
         )
 
     if "hdf5" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "hdf5")
-        with h5py.File(tracks_output_path + f"\\tracks_{index:04}" + ".hdf5", "w") as f:
+        with h5py.File(os.path.join(tracks_output_path + f"tracks_{index:04}.hdf5"), "w") as f:
             f.create_dataset("interp_tracks", data=tracks[0])
             f.create_dataset("raw_tracks", data=tracks[1])
 
     if "csv" in export_parameters["export_extension"]:
         tracks_output_path = os.path.join(export_parameters["folder_output"], "csv")
         export_csv(
-            tracks[0], tracks_output_path + f"\\tracks_{index:04}_interp" + ".csv"
+            tracks[0], os.path.join(tracks_output_path , f"tracks_{index:04}_interp.csv")
         )
-        export_csv(tracks[1], tracks_output_path + f"\\tracks_{index:04}_raw" + ".csv")
+        export_csv(tracks[1], os.path.join(tracks_output_path , f"tracks_{index:04}_raw.csv"))

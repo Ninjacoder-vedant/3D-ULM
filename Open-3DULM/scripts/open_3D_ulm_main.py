@@ -51,7 +51,7 @@ from ulm3d.utils.load_data import load_iq
 def parse_arguments():
     parser = argparse.ArgumentParser(description="3D ULM reconstruction")
 
-    parser.add_argument("--config-file",type=str,default=None,
+    parser.add_argument("-c","--config-file",type=str,default=None,
                         help="Config YAML")
 
     parser.add_argument("-i","--input",type=str,default=None,
@@ -63,7 +63,7 @@ def parse_arguments():
     parser.add_argument("-v","--verbose-level",type=int,default=1,
                         choices=range(4),help="Verbosity")
 
-    parser.add_argument("--workers",type=int,default=None,
+    parser.add_argument("-w","--workers",type=int,default=None,
                         help="Parallel workers (override config)")
 
     return parser.parse_args()
@@ -256,6 +256,7 @@ if __name__=="__main__":
         for file in os.listdir(os.path.abspath(args.input)):
             if file.endswith(".mat"):
                 iq_files.append(os.path.join(os.path.abspath(args.input),file))
+                break
 
     if len(iq_files)==0:
         raise FileNotFoundError("No IQ files found!")

@@ -11,6 +11,7 @@ from scipy.signal import butter, convolve, lfilter
 from ulm3d.loc.radial_symmetry_center import radial_symmetry_center_3d
 from ulm3d.utils.load_data import load_iq
 from ulm3d.utils.matlab_tool import smooth
+import time
 
 
 class ULM:
@@ -163,6 +164,7 @@ class ULM:
         Returns:
             np.ndarray: The filtered IQ data.
         """
+        start_time = time.time()
         iq = iq.astype("complex128")
         # Extract shape of IQ.
 
@@ -187,6 +189,8 @@ class ULM:
         # Apply bandpass filter if it is needed
         if self.filt_mode == "SVD_bandpass":
             iq_filtered = lfilter(self.filter_num, self.filter_den, iq_filtered)
+        end_time = time.time()
+        logger.debug(f"[filtering] Time taken: {end_time-start_time} sec")
         return iq_filtered
 
     def super_localization(
@@ -207,6 +211,7 @@ class ULM:
                 - pos: The sub-wavelength position of the microbubble (sub-voxel).
                 - frame_no: The index of the frame where the microbubble is located.
         """
+        start_time = time.time()
         iq = np.abs(np.asarray(iq))
         mask, intensity = get_intensity_matrix(iq, self.fwhm, type_name)
 
@@ -329,6 +334,8 @@ class ULM:
                 ("frame_no", int),
             ],
         )
+        end_time = time.time()
+        logger.debug(f"[super_localization] Time taken: {end_time-start_time} sec")
         return structured_localizations
 
     def create_tracks(self, localizations: np.ndarray) -> np.ndarray:
@@ -352,6 +359,7 @@ class ULM:
                 - time: The index frame.
                 - track_ind: The index of the track.
         """
+        start_time = time.time()
         pitch = np.mean(self.scale[:3])
         logger.debug(f"Average voxel pitch {pitch} ({self.scale[:3]})")
 
@@ -409,6 +417,8 @@ class ULM:
             interp_tracks = np.append(
                 interp_tracks, np.array(interp_track, dtype=interp_tracks.dtype)
             )
+        end_time = time.time()
+        logger.debug(f"[create_tracks] Time taken: {end_time-start_time} sec")
         return [interp_tracks, raw_tracks]
 
 

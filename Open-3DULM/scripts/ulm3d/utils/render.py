@@ -14,7 +14,7 @@ import ulm3d.ulm
 
 
 def save_output(file: str, output_dict: dict, extension_parameters: list):
-    logger.debug(f"Saving {output_dict.keys()} in {file}")
+    logger.debug(f"Saving {list(output_dict.keys())} in {file}")
     if "npy" in extension_parameters:
         key = list(output_dict.keys())[0]
         np.save(file + ".npy", output_dict[key])

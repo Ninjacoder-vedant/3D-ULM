@@ -3,9 +3,9 @@
     "input_var_name": "IQ"                                                                          # Name of the varaible when IQ are loaded (needed when loading .mat or .npz files).
     "max_workers": 1                                                                                # OPTIONAL PARAMETER (can be set with the command line). Number of process in parrallel to run 3D-ULM.
     # "export_extension_tracks_localizations": ["npz", "csv", "hdf5"]                                 # Determines the format to save tracks (supported formats: "npz", "csv", "hdf5").
-    "export_extension_tracks_localizations": ["hdf5"]  
+    "export_extension_tracks_localizations": ["npz"]  
     # "export_extension_volume": ["npz", "hdf5", "npy"]                                                 # Determines the format to save localisations (supported formats: "npz", "hdf5", "npy").
-    "export_extension_volume": ["hdf5"]   
+    "export_extension_volume": ["npz"]   
     "export_volume" : ["density", "velocity", "directivity", "saturation_curve", "power_doppler"]   # Volumes can be exported in different types:
                                                                                                     #   - density: Visualizes density of tracks in the entire volume.
                                                                                                     #   - velocity: Apply vector norm for velocity.
